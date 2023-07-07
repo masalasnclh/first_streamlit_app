@@ -26,7 +26,8 @@ sl.header("Fruityvice Fruit Advice!")
 
 import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-sl.text(fruityvice_response.json())
+
+# sl.text(fruityvice_response.json()) #just displays json object to screen
 
 # make json readable for average hooman
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
