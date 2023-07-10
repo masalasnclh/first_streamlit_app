@@ -29,8 +29,6 @@ sl.write('The user entered', fruit_choice)
 import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 
-# sl.text(fruityvice_response.json()) #just displays json object to screen
-
 # make json readable for average hooman
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
 # display as table
@@ -40,7 +38,7 @@ import snowflake.connector
 
 my_cnx = snowflake.connector.connect(**sl.secrets["snowflake"])
 my_cur = my_cnx.cursor()
-my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+my_cur.execute("SELECT * from fruit_load_list")
 my_data_row = my_cur.fetchone()
-sl.text("Hello from Snowflake:")
+sl.text("The fruit load list contains:")
 sl.text(my_data_row)
