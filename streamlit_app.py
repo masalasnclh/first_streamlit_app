@@ -1,7 +1,10 @@
 import streamlit as sl
+import pandas as pd
+import requests
+import snowflake.connector
+from urllib.error import urlerror
 
 sl.title( 'My Parents New Healthy Diner' )
-
 sl.header( 'Breakfast Favorites' )
 sl.text( '🥣 Omega 3 & Blueberry Oatmeal' )
 sl.text( '🥗 Kale, Spinach & Rocket Smoothie' )
@@ -10,7 +13,7 @@ sl.text( '🥑🍞 Avocado Toast' )
 
 sl.header( '🍌🥭 Build Your Own Fruit Smoothie 🥝🍇' )
 
-import pandas as pd
+#import pandas as pd
 my_fruit_list = pd.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 my_fruit_list = my_fruit_list.set_index('Fruit')
 
@@ -26,7 +29,7 @@ sl.header("Fruityvice Fruit Advice!")
 fruit_choice = sl.text_input('What fruit would you like information about?', 'Kiwi')
 sl.write('The user entered', fruit_choice)
 
-import requests
+#import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 
 # make json readable for average hooman
@@ -34,7 +37,10 @@ fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
 # display as table
 sl.dataframe(fruityvice_normalized)
 
-import snowflake.connector
+# don't run anything past here while we troublshoot
+sl.stop()
+
+#import snowflake.connector
 
 my_cnx = snowflake.connector.connect(**sl.secrets["snowflake"])
 my_cur = my_cnx.cursor()
