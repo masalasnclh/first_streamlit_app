@@ -5,6 +5,7 @@ import snowflake.connector
 from urllib.error import URLError
 
 sl.title( 'My Parents New Healthy Diner' )
+
 sl.header( 'Breakfast Favorites' )
 sl.text( '🥣 Omega 3 & Blueberry Oatmeal' )
 sl.text( '🥗 Kale, Spinach & Rocket Smoothie' )
@@ -26,16 +27,17 @@ sl.dataframe(fruits_to_show)
 
 #New Section to display fruityvice api response
 sl.header("Fruityvice Fruit Advice!")
-fruit_choice = sl.text_input('What fruit would you like information about?', 'Kiwi')
-sl.write('The user entered', fruit_choice)
+try: 
+  fruit_choice = sl.text_input('What fruit would you like information about?')
+  if not fruit_choice:
+    sl.error("Please select a fruit to get information.")
+  else:
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+    fruityvice_normalized = pd.json_normalize(fruityvice_response.json()) # make json readable for average hooman
+    sl.dataframe(fruityvice_normalized) # display as table
 
-#import requests
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-
-# make json readable for average hooman
-fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-# display as table
-sl.dataframe(fruityvice_normalized)
+except URLError as e:
+  sl.error()
 
 # don't run anything past here while we troublshoot
 sl.stop()
