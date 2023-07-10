@@ -48,4 +48,4 @@ add_my_fruit = sl.text_input('What fruit would you like to add?','')
 sl.write('Thanks for adding ', add_my_fruit)
 
 #This will not work correctly, but going with it for now
-my_cur=.execute( "insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST values ('from streamlit')" )
+my_cur.execute( "insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST values ('from streamlit')" )
